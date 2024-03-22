@@ -1,6 +1,6 @@
 import streamlit as st
 from PIL import Image
-from pix2tex.cli import LatexOCR
+from latex import LatexOCR
 
 def main():
     st.title("Image to LaTeX Formula Parser")
