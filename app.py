@@ -28,7 +28,7 @@ def process_image(image):
     # Perform LaTeX OCR on the image
     img = Image.open(image)
     model = LatexOCR()
-    latex_formula = model(img)
+    latex_formula = model._call(img)
     return latex_formula
 
 def parse_to_md(latex_formula):

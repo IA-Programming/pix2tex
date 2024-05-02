@@ -20,7 +20,7 @@ from pix2tex.utils import *
 # Function to download checkpoints (modified to download to project root)
 def download_checkpoints():
     tag = 'v0.0.1'  
-    root_dir = os.path.dirname(os.path.realpath(_file_))  
+    root_dir = os.path.dirname(os.path.realpath(__file__))  
     download_dir = os.path.join(root_dir, 'model_checkpoints')  
     print(download_dir)
     os.makedirs(download_dir, exist_ok=True)
@@ -40,7 +40,7 @@ class LatexOCR:
     last_pic = None
 
     @in_model_path()
-    def _init_(self, arguments=None):
+    def __init__(self, arguments=None):
         """Initialize a LatexOCR model
 
         Args:
@@ -62,8 +62,8 @@ class LatexOCR:
             download_checkpoints()
 
         self.model = get_model(self.args)
-        print('\033[91m' + self.args.checkpoint + '\033[0m')
-        self.args.checkpoint = os.path.join(os.path.dirname(_file_), 'model_checkpoints', 'weights.pth')
+        os.makedirs('model_checkpoint', exist_ok=True)
+        self.args.checkpoint = os.path.join(os.path.dirname(__file__), 'model_checkpoints', 'weights.pth')
         self.model.load_state_dict(torch.load(self.args.checkpoint, map_location=self.args.device))
         self.model.eval()
 
@@ -75,7 +75,7 @@ class LatexOCR:
         self.tokenizer = PreTrainedTokenizerFast(tokenizer_file=self.args.tokenizer)
 
     @in_model_path()
-    def _call_(self, img=None, resize=True) -> str:
+    def _call(self, img=None, resize=True) -> str:
         """Get a prediction from an image
 
         Args:
